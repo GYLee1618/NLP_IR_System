@@ -71,3 +71,42 @@ def doc2vec(tokens,basis):
 				vec[word] += 1
 	return vec
 
+
+class freq_Mat:
+	smooth = 1
+	def __init__(self,fname):
+		self.docs = getlines(fname)
+		self.counts = np.ones([length(docs),1])*freq_Mat.smooth
+		self.words = []
+		self.wtotals = np.zeros([length(docs),1])
+		
+		for doc in self.docs
+			worddoc = []
+			tokens = sanitize(tokenize(doc))
+
+			for token in tokens:
+				if token not in words:
+					if words:
+						self.counts = np.hstack([self.counts,np.ones([length(docs),1])*freq_Mat.smooth])
+
+					self.wtotals += freq_Mat.smooth	
+					self.words.append(token)
+					worddoc.append(token)
+
+				self.counts[self.docs.index(doc),self.words.index(token)]+=1
+				self.wtotals[self.docs.index(doc)] += 1
+
+		self.DF = np.zeros([length(self.words),1])
+		
+		for x in range(0,length(self.words)-1):
+			for y in range(0,length(self.docs)-1):
+				if counts[y,x] is not freq_Mat.smooth:
+					self.DF[x] += 1
+
+		self.TF = np.log2(self.counts) - np.log2(self.wtotals)
+		
+
+
+
+
+
