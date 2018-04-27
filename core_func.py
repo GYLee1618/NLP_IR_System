@@ -16,12 +16,10 @@ def getlines(fname):
 	file = open(fname,"r")
 
 	if file.mode == 'r':
-	    lines = file.readlines()
+	    lines = file.read().splitlines()
 	else:
 	    raise ValueError("Could not read file ",fname,"!")
-
-	lines = file.readlines();
-
+	#print(lines)
 	return lines
 
 #takes filename and splits it into tokens
@@ -75,19 +73,22 @@ def doc2vec(tokens,basis):
 class freq_Mat:
 	smooth = 1
 	def __init__(self,fname):
+
 		self.docs = getlines(fname)
-		self.counts = np.ones([length(docs),1])*freq_Mat.smooth
+
+		self.counts = np.ones([len(self.docs),1])*freq_Mat.smooth
 		self.words = []
-		self.wtotals = np.zeros([length(docs),1])
+		self.wtotals = np.zeros([len(self.docs),1])
 		
-		for doc in self.docs
+		for doc in self.docs:
+			print('training on ',doc)
 			worddoc = []
 			tokens = sanitize(tokenize(doc))
 
 			for token in tokens:
-				if token not in words:
-					if words:
-						self.counts = np.hstack([self.counts,np.ones([length(docs),1])*freq_Mat.smooth])
+				if token not in self.words:
+					if self.words:
+						self.counts = np.hstack([self.counts,np.ones([len(self.docs),1])*freq_Mat.smooth])
 
 					self.wtotals += freq_Mat.smooth	
 					self.words.append(token)
@@ -96,16 +97,14 @@ class freq_Mat:
 				self.counts[self.docs.index(doc),self.words.index(token)]+=1
 				self.wtotals[self.docs.index(doc)] += 1
 
-		self.DF = np.zeros([length(self.words),1])
+		self.DF = np.zeros([len(self.words),1])
 		
-		for x in range(0,length(self.words)-1):
-			for y in range(0,length(self.docs)-1):
+		for x in range(0,len(self.words)-1):
+			for y in range(0,len(self.docs)-1):
 				if counts[y,x] is not freq_Mat.smooth:
 					self.DF[x] += 1
 
 		self.TF = np.log2(self.counts) - np.log2(self.wtotals)
-		
-
 
 
 
