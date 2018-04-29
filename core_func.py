@@ -42,7 +42,7 @@ def sanitize(tokens):
 	clean_tokens = []
 	
 	for token in tokens:
-		if token not in stopWords and (token.isalnum() or len(token) > 1 and token != '...'):
+		if token not in stopWords and (token.isalpha()):# or len(token) > 1 and token != '...'):
 			clean_tokens.append(SnowballStemmer("english").stem(token))
 	
 	return clean_tokens
@@ -71,38 +71,48 @@ def doc2vec(tokens,basis):
 
 
 class freq_Mat:
-	smooth = 1
+	smooth = .01
 	def __init__(self,fname):
 
 		self.docs = getlines(fname)
 
 		self.counts = np.ones([len(self.docs),1])*freq_Mat.smooth
-		self.words = []
+		self.words = {}
+		self.vocab_size = 0
 		self.wtotals = np.zeros([len(self.docs),1])
-		
+		self.DF = np.matrix([1])
+
+		i = 0
+
 		for doc in self.docs:
-			print('training on ',doc)
+			print('training on',doc)
 			worddoc = []
 			tokens = sanitize(tokenize(doc))
+			word_isThere = dict(zip(self.words.keys(),[0]*self.vocab_size))
 
 			for token in tokens:
-				if token not in self.words:
+				if token not in self.words.keys():
 					if self.words:
 						self.counts = np.hstack([self.counts,np.ones([len(self.docs),1])*freq_Mat.smooth])
+						self.DF = np.hstack([self.DF,np.matrix([1])])
 
 					self.wtotals += freq_Mat.smooth	
-					self.words.append(token)
+					self.vocab_size += 1
+					self.words[token] = self.vocab_size
+					
 					worddoc.append(token)
+					word_isThere[token] = 1
 
-				self.counts[self.docs.index(doc),self.words.index(token)]+=1
-				self.wtotals[self.docs.index(doc)] += 1
+				if word_isThere:
+					self.DF[0,self.words[token]-1] += 1
+					word_isThere[token] = 1
 
-		self.DF = np.zeros([len(self.words),1])
-		
-		for x in range(0,len(self.words)-1):
-			for y in range(0,len(self.docs)-1):
-				if counts[y,x] is not freq_Mat.smooth:
-					self.DF[x] += 1
+				self.counts[i,self.words[token]-1]+=1
+				self.wtotals[i] += 1
+			i += 1
+
+		np.savetxt('counts.csv',self.counts,delimiter=",")
+		np.savetxt('totals.csv',self.wtotals,delimiter=",")
 
 		self.TF = np.log2(self.counts) - np.log2(self.wtotals)
 
