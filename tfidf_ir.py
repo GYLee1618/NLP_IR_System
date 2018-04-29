@@ -10,30 +10,38 @@ class Searcher(core_func.freq_Mat):
 		
 	def query(self,query):
 		clean_query = core_func.sanitize(word_tokenize(query))
+		#print(clean_query)
 		
-		QF = np.ones([len(self.words),1])*core_func.freq_Mat.smooth
+		QF = np.zeros([len(self.words),1])*core_func.freq_Mat.smooth
 		max_QF = 0
 
 		for word in clean_query:
 			if word in self.words:
 				QF[self.words[word]] += 1
-				if QF[self.words[word]] > max_QF:
-					max_QF = QF[self.words[word]]
 		
-		queryscore = np.multiply(.5*.5*QF/max_QF,np.log2(len(self.docs)/np.transpose(self.DF)))
-		weights = np.multiply((self.counts),np.log2(len(self.docs)/self.DF))
+		queryscore = np.multiply(QF/len(clean_query),np.log2(len(self.docs)/np.transpose(self.DF)))
+		weights = np.multiply(1+(self.TF),np.log2(len(self.docs)/self.DF))
 
-		np.savetxt('weights.csv',weights,delimiter=",")
+		scores = np.zeros(len(self.docs))
+
+		for i in range(0,len(self.docs)):
+			scores[i] = (np.dot(weights[i,:],queryscore))
+			#print(i+1,np.linalg.norm(weights[i,:]))
+			
 		
-		scores = np.divide(np.matmul(nltkp.transpose(queryscore),np.transpose(weights)),np.multiply(np.diagonal(np.matmul(np.transpose(weights),weights)),np.diagonal((np.matmul(queryscore,np.transpose(queryscore))))))
-		
-		ranked_docs = sorted(range(len(scores)), key=lambda k: scores[k])
-		
+		#print(scores)
+
+		score_index = np.argsort(scores)
+
+		#print(score_index)
+
 		for x in range(len(self.docs)-1,-1,-1):
-			print(self.docs[ranked_docs[x]])		
+			if scores[score_index[x]] < -100:
+				break
+			print(self.docs[score_index[x]], '\tscore:\t',scores[score_index[x]])		
 
-
-tfidfsearch = Searcher("./cacm_small.files")
+files = input("Corpus: ")
+tfidfsearch = Searcher(files)
 while True:
 	q = input("Query: ")
 	tfidfsearch.query(q)
