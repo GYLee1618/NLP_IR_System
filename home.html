@@ -1,0 +1,38 @@
+<html>
+<body>
+	<form>
+		<input type="text" name="query">
+		<button type="submit">Search</button>
+	</form>
+
+	<ul id="llist" style="list-style-type:none">
+		<li></li>		
+	</ul>
+
+	<script>
+		function makelink(ltext,ldest) {
+			var link = document.createElement("a");
+			var text = document.createElement("li");
+			var node = document.createTextNode(ltext);
+			link.appendChild(text);
+			link.href = ldest
+			text.appendChild(node);
+			var element = document.getElementById('llist');
+			element.appendChild(link)
+		}
+		
+		function myFunction() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState === XMLHttpRequest.DONE) {
+					var rlink = xhttp.responseText
+					makelink(rlink,rlink)			
+				}
+			};
+			xhttp.open("POST","http://127.0.0.1:5000/python/",true) //placeholder link, will change this later
+			xhttp.send();
+		}
+	</script>
+
+</body>
+</html>

@@ -33,15 +33,17 @@ class Searcher(core_func.freq_Mat):
 
 		score_index = np.argsort(scores)
 
-		#print(score_index)
+		links = []
 
 		for x in range(len(self.docs)-1,-1,-1):
 			if scores[score_index[x]] < -100:
 				break
-			print(self.docs[score_index[x]], '\tscore:\t',scores[score_index[x]])		
+			links.append(self.docs[score_index[x]])
+		return links
 
-files = input("Corpus: ")
-tfidfsearch = Searcher(files)
-while True:
-	q = input("Query: ")
-	tfidfsearch.query(q)
+if __name__ == "__main__":
+	files = input("Corpus: ")
+	tfidfsearch = Searcher(files)
+	while True:
+		q = input("Query: ")
+		print(tfidfsearch.query(q))
