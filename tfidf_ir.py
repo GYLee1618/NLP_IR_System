@@ -36,7 +36,7 @@ class Searcher(core_func.freq_Mat):
 		links = []
 
 		for x in range(len(self.docs)-1,-1,-1):
-			if scores[score_index[x]] < -100:
+			if scores[score_index[x]] < -len(self.docs):
 				break
 			links.append(self.docs[score_index[x]])
 		return links
