@@ -3,10 +3,11 @@ import core_func
 from nltk.tokenize import word_tokenize
 import pickle
 
-class Searcher(core_func.freq_Mat):	
-	def __init__(self,fname):
-		super().__init__(fname)
-		print('calculating weights')
+class NBSearcher(core_func.freq_Mat):	
+	def __init__(self,fname=''):
+		if fname is not '':
+			super().__init__(fname)
+			print('calculating weights')
 
 	def query(self,query):
 		clean_query = core_func.sanitize(word_tokenize(query))
@@ -34,9 +35,10 @@ class Searcher(core_func.freq_Mat):
 if __name__ == "__main__":
 	trainedNB =  open("trainedNB.txt","wb")
 	files = input("Corpus: ")
-	NBsearch = Searcher(files)
+	close(trainedNB)
+	NBsearch = NBSearcher(files)
 	pickle.dump(NBsearch,trainedNB)
-else:
-	trainedNB = open("trainedNB.txt","rb")
-	pickle.load(trainedNB)
+# else:
+# 	trainedNB = open("trainedNB.txt","rb")
+# 	NBsearch = pickle.load(trainedNB)
 

@@ -1,12 +1,14 @@
 import numpy as np
 import core_func
 from nltk.tokenize import word_tokenize
+import pickle
 
-class Searcher(core_func.freq_Mat):	
-	def __init__(self,fname):
-		super().__init__(fname)
-		print('calculating weights')
-		#print(self.DF)
+class TF_IDFSearcher(core_func.freq_Mat):	
+	def __init__(self,fname=''):
+		if fname is not '':
+			super().__init__(fname)
+			print('calculating weights')
+	
 		
 	def query(self,query):
 		clean_query = core_func.sanitize(word_tokenize(query))
@@ -42,14 +44,14 @@ class Searcher(core_func.freq_Mat):
 		return links
 
 if __name__ == "__main__":
- 	trainedtfidf =  open("trainedtfidf.txt","wb")
+	trainedtfidf =  open("trainedtfidf.txt","wb")
 	files = input("Corpus: ")
-	tfidfsearch = Searcher(files)
+	close
+	tfidfsearch = TF_IDFSearcher(files)
 	pickle.dump(tfidfsearch,trainedtfidf)
-else:
-	trainedtfidf = open("trainedtfidf.txt","rb")
-	pickle.load(trainedtfidf)
-
+# else:
+# 	trainedtfidf = open("trainedtfidf.txt","rb")
+# 	tfidfsearch= pickle.load(trainedtfidf)
 
 
  	# files = input("Corpus: ")
