@@ -1,6 +1,7 @@
 import numpy as np
 import core_func
 from nltk.tokenize import word_tokenize
+import pickle
 
 class Searcher(core_func.freq_Mat):	
 	def __init__(self,fname):
@@ -23,8 +24,15 @@ class Searcher(core_func.freq_Mat):
 				break
 			print(self.docs[score_index[x]], '\tscore:\t',scores[score_index[x]])	
 
+
+
+	# files = input("Corpus: ")
+	# NBsearch = Searcher(files)
+	# while True:
+	# 	q = input("Query: ")
+	# 	NBsearch.query(q)
+trainedNB =  open("trainedNB.txt","wb")
 files = input("Corpus: ")
 NBsearch = Searcher(files)
-while True:
-	q = input("Query: ")
-	NBsearch.query(q)
+pickle.dump(NBsearch,trainedNB)
+
