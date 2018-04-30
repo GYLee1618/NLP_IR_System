@@ -31,8 +31,12 @@ class Searcher(core_func.freq_Mat):
 	# while True:
 	# 	q = input("Query: ")
 	# 	NBsearch.query(q)
-trainedNB =  open("trainedNB.txt","wb")
-files = input("Corpus: ")
-NBsearch = Searcher(files)
-pickle.dump(NBsearch,trainedNB)
+if __name__ == "__main__":
+	trainedNB =  open("trainedNB.txt","wb")
+	files = input("Corpus: ")
+	NBsearch = Searcher(files)
+	pickle.dump(NBsearch,trainedNB)
+else:
+	trainedNB = open("trainedNB.txt","rb")
+	pickle.load(trainedNB)
 
