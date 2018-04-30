@@ -41,9 +41,14 @@ class Searcher(core_func.freq_Mat):
 			links.append(self.docs[score_index[x]])
 		return links
 
-if __name__ == "__main__":
-	files = input("Corpus: ")
-	tfidfsearch = Searcher(files)
-	while True:
-		q = input("Query: ")
-		print(tfidfsearch.query(q))
+# if __name__ == "__main__":
+# 	files = input("Corpus: ")
+# 	tfidfsearch = Searcher(files)
+# 	while True:
+# 		q = input("Query: ")
+# 		print(tfidfsearch.query(q))
+
+trainedtfidf =  open("trainedtfidf.txt","wb")
+files = input("Corpus: ")
+tfidfsearch = Searcher(files)
+pickle.dump(tfidfsearch,trainedtfidf)

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import math
 import numpy as np
 
+
 dependencies.try_dependencies()
 
 stopWords = set(stopwords.words('english'))
@@ -77,7 +78,6 @@ def doc2vec(tokens,basis):
 			if token == word:
 				vec[word] += 1
 	return vec
-
 
 class freq_Mat:
 	smooth = 0.01
