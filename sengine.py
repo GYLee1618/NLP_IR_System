@@ -10,10 +10,12 @@ import pickle
 tfidfsearch = TF_IDFSearcher()
 NBsearch = NBSearcher()
 
-trainedtfidf = open("trainedtfidf.txt","rb")
+tfidftrainedfile = input("tfidf trained file:")
+trainedtfidf = open(tfidftrainedfile,"rb")
 tfidfsearch = pickle.load(trainedtfidf)
 
-trainedNB = open("trainedNB.txt","rb")
+trainedNBfile = input("Naive Bayes trained file:")
+trainedNB = open(trainedNBfile,"rb")
 NBsearch = pickle.load(trainedNB)
 
 app = Flask(__name__)

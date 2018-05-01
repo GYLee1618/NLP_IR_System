@@ -44,9 +44,9 @@ class TF_IDFSearcher(core_func.freq_Mat):
 		return links
 
 if __name__ == "__main__":
-	trainedtfidf =  open("trainedtfidf.txt","wb")
+	tfidftrainedfile = input("File to save trained data to:")
+	trainedtfidf =  open(tfidftrainedfile,"wb")
 	files = input("Corpus: ")
-	close
 	tfidfsearch = TF_IDFSearcher(files)
 	pickle.dump(tfidfsearch,trainedtfidf)
 # else:

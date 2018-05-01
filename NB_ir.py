@@ -20,10 +20,13 @@ class NBSearcher(core_func.freq_Mat):
 
 		score_index = np.argsort(scores)
 
+		links = []
+
 		for x in range(len(self.docs)-1,-1,-1):
 			if scores[score_index[x]] < -12:
 				break
-			print(self.docs[score_index[x]], '\tscore:\t',scores[score_index[x]])	
+			links.append(self.docs[score_index[x]])
+		return links
 
 
 
@@ -32,10 +35,10 @@ class NBSearcher(core_func.freq_Mat):
 	# while True:
 	# 	q = input("Query: ")
 	# 	NBsearch.query(q)
-if __name__ == "__main__":
-	trainedNB =  open("trainedNB.txt","wb")
+if __name__ == "__main__":(
+	NBtrainedfile = input("File to save trained data to:")
+	trainedNB =  open(NBtrainedfile,"wb")
 	files = input("Corpus: ")
-	close(trainedNB)
 	NBsearch = NBSearcher(files)
 	pickle.dump(NBsearch,trainedNB)
 # else:
