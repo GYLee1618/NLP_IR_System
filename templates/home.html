@@ -5,8 +5,13 @@
 		<button type="submit">Search</button><br>
 		<input type="radio" name="method" value="nb">Naive Bayes
 		<input type="radio" name="method" value="tfidf">TF*IDF Similarity<br>
-		
 	</form>
+
+	<ul id="llist" style="list-style-type:none">
+	{% for link in links %}
+        <li><a href="{{ link }}">{{ link }}</a></li>
+    {% endfor %}
+	</ul>
 
 
 </body>

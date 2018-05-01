@@ -23,15 +23,15 @@ class NBSearcher(core_func.freq_Mat):
 		links = []
 
 		for x in range(len(self.docs)-1,-1,-1):
-			if scores[score_index[x]] < -12:
+			if scores[score_index[x]] < -np.sqrt(len(self.docs)):
 				break
 			links.append(self.docs[score_index[x]])
 		return links
 
 
 
-if __name__ == "__main__":(
-	NBtrainedfile = input("File to save trained data to:")
+if __name__ == "__main__":
+	NBtrainedfile = input("File to save trained data to: ")
 	trainedNB =  open(NBtrainedfile,"wb")
 	files = input("Corpus: ")
 	NBsearch = NBSearcher(files)

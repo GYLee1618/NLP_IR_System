@@ -44,7 +44,7 @@ class TF_IDFSearcher(core_func.freq_Mat):
 		return links
 
 if __name__ == "__main__":
-	tfidftrainedfile = input("File to save trained data to:")
+	tfidftrainedfile = input("File to save trained data to: ")
 	trainedtfidf =  open(tfidftrainedfile,"wb")
 	files = input("Corpus: ")
 	tfidfsearch = TF_IDFSearcher(files)
