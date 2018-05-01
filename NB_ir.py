@@ -30,18 +30,11 @@ class NBSearcher(core_func.freq_Mat):
 
 
 
-	# files = input("Corpus: ")
-	# NBsearch = Searcher(files)
-	# while True:
-	# 	q = input("Query: ")
-	# 	NBsearch.query(q)
 if __name__ == "__main__":(
 	NBtrainedfile = input("File to save trained data to:")
 	trainedNB =  open(NBtrainedfile,"wb")
 	files = input("Corpus: ")
 	NBsearch = NBSearcher(files)
 	pickle.dump(NBsearch,trainedNB)
-# else:
-# 	trainedNB = open("trainedNB.txt","rb")
-# 	NBsearch = pickle.load(trainedNB)
+
 

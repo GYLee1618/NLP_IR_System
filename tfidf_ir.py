@@ -49,14 +49,4 @@ if __name__ == "__main__":
 	files = input("Corpus: ")
 	tfidfsearch = TF_IDFSearcher(files)
 	pickle.dump(tfidfsearch,trainedtfidf)
-# else:
-# 	trainedtfidf = open("trainedtfidf.txt","rb")
-# 	tfidfsearch= pickle.load(trainedtfidf)
-
-
- 	# files = input("Corpus: ")
- 	# tfidfsearch = Searcher(files)
- 	# while True:
- 	# 	q = input("Query: ")
- 	# 	print(tfidfsearch.query(q))
 
